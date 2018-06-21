@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/cube_holders/Body.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Inventory.gd" type="Script" id=2]
+[ext_resource path="res://scenes/cubes/CubeFactory.tscn" type="PackedScene" id=3]
+
+[node name="Character" type="Node2D" index="0"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Body" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 0, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Inventory" type="Node" parent="." index="1"]
+
+script = ExtResource( 2 )
+
+[node name="CubeFactory" parent="Inventory" index="0" instance=ExtResource( 3 )]
+
+

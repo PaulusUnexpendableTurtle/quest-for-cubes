@@ -13,6 +13,8 @@ enum materials {
 	STEEL
 }
 
+var types_count = 3
+
 func make_cube(material):
 	if material == WOOD:
 		return Wood.instance()

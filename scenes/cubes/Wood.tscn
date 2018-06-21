@@ -17,6 +17,7 @@ animations = [ {
 _sections_unfolded = [ "Transform" ]
 WEIGHT = 10
 LIFE = 40
+type = "Wood"
 
 [node name="AnimatedSprite" parent="." index="0"]
 

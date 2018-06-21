@@ -6,8 +6,10 @@ var weight
 export (int) var START_LIFE
 var base_life
 
+export (String) var type = "Weapon"
+
 func _ready():
-	prepare_array()
+	prepare_arrays()
 	
 	weight = START_WEIGHT
 	base_life = START_LIFE

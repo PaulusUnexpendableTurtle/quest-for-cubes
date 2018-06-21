@@ -16,6 +16,7 @@ animations = [ {
 
 WEIGHT = 50
 LIFE = 100
+type = "Stone"
 
 [node name="AnimatedSprite" parent="." index="0"]
 

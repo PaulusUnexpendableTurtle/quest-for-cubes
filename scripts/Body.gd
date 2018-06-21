@@ -1,7 +1,7 @@
 extends "res://scripts/CubeHolder.gd"
 
 func _ready():
-	prepare_array()
+	prepare_arrays()
 	var cubes = $CubeContainer.get_children()
 	for cube in cubes:
 		$CubeContainer.remove_child(cube)
@@ -34,8 +34,6 @@ func on_Cube_destroyed(point):
 	cash = cash + remove_cube(point)
 	if point == CENTER:
 		emit_signal("dead")
-
-
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

@@ -14,17 +14,19 @@ func set_cube(point, value):
 
 
 func _ready():
-	prepare_array()
+	prepare_arrays()
 	var cubes = $CubeContainer.get_children()
 	for cube in cubes:
 		$CubeContainer.remove_child(cube)
 		add_cube(cube.position / cell_size, cube)
 
-func prepare_array():
+func prepare_arrays():
 	for i in range(SIZE.x):
 		cubes.append([])
+		used.append([])
 		for j in range(SIZE.y):
 			cubes[i].append(null)
+			used[i].append(false)
 
 var cell_size = 40
 

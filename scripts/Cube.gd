@@ -7,6 +7,7 @@ var life
 func _ready():
 	pass
 
+export (String) var type = "Cube"
 
 func set_sprite(frames):
 	$AnimatedSprite.stop()
