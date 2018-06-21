@@ -1,22 +1,57 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/cube_holders/Body.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scripts/Inventory.gd" type="Script" id=2]
-[ext_resource path="res://scenes/cubes/CubeFactory.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/Character.gd" type="Script" id=1]
+[ext_resource path="res://scenes/cube_holders/Body.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/Inventory.gd" type="Script" id=3]
+[ext_resource path="res://scenes/cubes/CubeFactory.tscn" type="PackedScene" id=4]
 
-[node name="Character" type="Node2D" index="0"]
+[node name="Character" type="KinematicBody2D" index="0"]
 
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+MOMENTUM = null
+MASS = null
+HP = null
+ARMOR = null
+STRENGTH = null
+DMG = null
+WEAPON_HP = null
+SPEED = null
+LUCK = null
 
-[node name="Body" parent="." index="0" instance=ExtResource( 1 )]
+[node name="Body" parent="." index="0" instance=ExtResource( 2 )]
 
 position = Vector2( 0, 0 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Inventory" type="Node" parent="." index="1"]
+[node name="BodyCollision_copy" type="CollisionPolygon2D" parent="." index="1"]
 
-script = ExtResource( 2 )
+build_mode = 0
+polygon = PoolVector2Array(  )
 
-[node name="CubeFactory" parent="Inventory" index="0" instance=ExtResource( 3 )]
+[node name="Inventory" type="Node" parent="." index="2"]
+
+script = ExtResource( 3 )
+
+[node name="CubeFactory" parent="Inventory" index="0" instance=ExtResource( 4 )]
+
+[node name="WeaponHolder" type="Node2D" parent="." index="3"]
+
+[node name="WeaponTimer" type="Timer" parent="WeaponHolder" index="0"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[connection signal="body_changed" from="Body" to="." method="_on_Body_body_changed"]
+
+[connection signal="dead" from="Body" to="." method="die"]
+
+[connection signal="timeout" from="WeaponHolder/WeaponTimer" to="." method="_on_WeaponTimer_timeout"]
 
 

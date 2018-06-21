@@ -31,7 +31,9 @@ __meta__ = {
 "_edit_group_": true
 }
 WEIGHT = null
+REDROP_CHANCE = null
 LIFE = null
+type = "Cube"
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="0"]
 

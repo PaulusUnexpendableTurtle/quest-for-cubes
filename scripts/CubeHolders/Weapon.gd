@@ -1,16 +1,18 @@
 extends "res://scripts/CubeHolder.gd"
 
-export (int) var WEIGHT
+export (int) var START_WEIGHT
 var weight
 
-export (int) var LIFE
-var life
+export (int) var START_LIFE
+var base_life
+
+export (String) var type = "Weapon"
 
 func _ready():
 	prepare_arrays()
 	
-	weight = WEIGHT
-	life = LIFE
+	weight = START_WEIGHT
+	base_life = START_LIFE
 	
 	var cubes = $CubeContainer.get_children()
 	for cube in cubes:
@@ -26,10 +28,10 @@ func add_cube(point, cube):
 	
 	if ret != null:
 		weight -= ret.WEIGHT
-		life -= ret.LIFE
+		base_life -= ret.LIFE
 	
 	weight += cube.WEIGHT
-	life += cube.LIFE
+	base_life += cube.LIFE
 	
 	return ret
 
@@ -39,15 +41,20 @@ func remove_cube(point):
 	
 	for cube in ret:
 		weight -= cube.WEIGHT
-		life -= cube.LIFE
+		base_life -= cube.LIFE
 	
 	return ret
 
 
 signal destroyed
-signal damage(amount)
+
+var life
+var max_life
+func reset_life(amount):
+	max_life = amount
+	life = max_life
 
 func change_life(amount):
-	life = clamp(life + amount, 0, LIFE)
+	life = clamp(life + amount, 0, max_life)
 	if life == 0:
 		emit_signal("destroyed")

@@ -15,6 +15,7 @@ animations = [ {
 [node name="Stone" index="0" instance=ExtResource( 1 )]
 
 WEIGHT = 50
+REDROP_CHANCE = 75
 LIFE = 100
 type = "Stone"
 

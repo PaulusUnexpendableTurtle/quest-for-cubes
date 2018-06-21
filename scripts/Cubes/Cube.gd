@@ -1,8 +1,6 @@
 extends Area2D
 
 export (int) var WEIGHT
-export (int) var REDROP_CHANCE
-
 export (int) var LIFE
 var life
 
@@ -33,7 +31,6 @@ func set_sprite_by_paths(paths, fps):
 
 
 signal destroyed
-signal damage(amount)
 
 func change_life(amount):
 	life = clamp(life + amount, 0, LIFE)

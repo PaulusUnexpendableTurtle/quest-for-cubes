@@ -28,8 +28,12 @@ func remove_cube(point):
 
 var cash = []
 
-signal dead
+signal body_changed
+func rebuild_collision_shape():
+	.rebuild_collision_shape()
+	emit_signal("body_changed")
 
+signal dead
 func on_Cube_destroyed(point):
 	cash = cash + remove_cube(point)
 	if point == CENTER:

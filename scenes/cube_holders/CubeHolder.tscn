@@ -2,13 +2,16 @@
 
 [ext_resource path="res://scripts/CubeHolder.gd" type="Script" id=1]
 
-[node name="CubeHolder" type="KinematicBody2D" index="0"]
+[node name="CubeHolder" type="Area2D" index="0"]
 
 position = Vector2( 0.816087, -0.909392 )
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-collision/safe_margin = 0.08
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
 script = ExtResource( 1 )
 SIZE = null
 CENTER = null
