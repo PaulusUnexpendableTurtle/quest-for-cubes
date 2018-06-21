@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/BlockFactory.gd" type="Script" id=1]
+[ext_resource path="res://scenes/cubes/Wood.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/cubes/Stone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/cubes/Steel.tscn" type="PackedScene" id=4]
+
+[node name="CubeFactory" type="Node" index="0"]
+
+script = ExtResource( 1 )
+Wood = ExtResource( 2 )
+Stone = ExtResource( 3 )
+Steel = ExtResource( 4 )
+
+
