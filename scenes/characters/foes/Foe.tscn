@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/characters/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Characters/Foes/Foe.gd" type="Script" id=2]
+
+[node name="Foe" index="0" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+MS_PER_DECISION = null
+
+

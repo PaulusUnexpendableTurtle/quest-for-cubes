@@ -7,17 +7,14 @@ func _ready():
 var weapons = []
 var materials_count = []
 
-func add_item(item):
-	if item.type == "Weapon":
-		weapons.append(item)
-	else:
-		if item.type == "Wood":
-			materials_count[$CubeFactory.WOOD] += 1
-		elif item.type == "Stone":
-			materials_count[$CubeFactory.STONE] += 1
-		elif item.type == "Steel":
-			materials_count[$CubeFactory.STEEL] += 1
-		item.queue_free()
+func add_cube(item):
+	if item.type == "Wood":
+		materials_count[$CubeFactory.WOOD] += 1
+	elif item.type == "Stone":
+		materials_count[$CubeFactory.STONE] += 1
+	elif item.type == "Steel":
+		materials_count[$CubeFactory.STEEL] += 1
+	item.queue_free()
 
 
 func make_cube(type):

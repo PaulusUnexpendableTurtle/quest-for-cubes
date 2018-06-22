@@ -16,7 +16,6 @@ animations = [ {
 
 _sections_unfolded = [ "Transform" ]
 WEIGHT = 10
-REDROP_CHANCE = 80
 LIFE = 40
 type = "Wood"
 

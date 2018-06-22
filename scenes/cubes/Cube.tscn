@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scripts/Cube.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Cubes/Cube.gd" type="Script" id=1]
 [ext_resource path="res://assets/cube_texture_proto.png" type="Texture" id=2]
 
 [sub_resource type="SpriteFrames" id=1]

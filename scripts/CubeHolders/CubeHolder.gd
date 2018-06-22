@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Area2D
 
 export (Vector2) var SIZE
 export (Vector2) var CENTER
@@ -13,7 +13,12 @@ func set_cube(point, value):
 	cubes[point.x][point.y] = value
 
 
+var cell_size = 40
+
 func _ready():
+	_on_ready()
+
+func _on_ready():
 	prepare_arrays()
 	var cubes = $CubeContainer.get_children()
 	for cube in cubes:
@@ -28,11 +33,12 @@ func prepare_arrays():
 			cubes[i].append(null)
 			used[i].append(false)
 
-var cell_size = 40
+class Error:
+	var type = "Impossible"
 
 func add_cube(point, cube):
 	if !check_bounds(point + CENTER):
-		return false
+		return Error.new()
 	
 	var found = point == Vector2(0, 0) && get_cube(CENTER) == null
 	for d in directions:
@@ -41,7 +47,7 @@ func add_cube(point, cube):
 		if found:
 			break
 	if !found:
-		return false
+		return Error.new()
 	
 	cube.life = cube.LIFE
 	cube.position = point * cell_size
@@ -187,7 +193,7 @@ func vertex(coords, shift):
 	return (coords + shift * 0.5) * cell_size - shift * margin
 
 func check_bounds(point):
-	return 0 <= point.x < SIZE.x && 0 <= point.y < SIZE.y
+	return 0 <= point.x && point.x < SIZE.x && 0 <= point.y && point.y < SIZE.y
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

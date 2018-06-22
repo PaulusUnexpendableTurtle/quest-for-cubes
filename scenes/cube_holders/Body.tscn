@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scripts/Body.gd" type="Script" id=1]
+[ext_resource path="res://scripts/CubeHolders/Body.gd" type="Script" id=1]
 
 [node name="Body" type="Area2D" index="0"]
 
@@ -13,8 +13,8 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
-SIZE = Vector2( 5, 5 )
-CENTER = Vector2( 2, 2 )
+SIZE = null
+CENTER = null
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 
