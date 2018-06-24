@@ -3,6 +3,11 @@ extends KinematicBody2D
 
 func _ready():
 	_on_Body_body_changed()
+	
+	var t = $Body/CubeContainer.get_children()
+	for e in t:
+		hitable_children.append(e)
+	
 	if $WeaponHolder.get_child_count() > 1:
 		var arr = $WeaponHolder.get_children()
 		for weapon in arr:
@@ -10,6 +15,8 @@ func _ready():
 				continue
 			$WeaponHolder.remove_child(weapon)
 			add_weapon(weapon)
+	
+	hitable_children.append($Body)
 
 
 func _on_Body_body_changed():
@@ -55,8 +62,6 @@ func count_stats():
 	weapon_hp = WEAPON_HP
 	speed = SPEED
 	luck = LUCK
-	
-	print(LUCK)
 	
 	for i in range(arr.size()):
 		for j in range(arr[i].size()):
@@ -153,13 +158,11 @@ func move(direction, delta):
 	position += direction * body_speed() * delta
 
 func body_speed():
-	return (500 + speed * 10 + strength * 5) / mass + 40 * get_bonus()
+	return (2000 + speed * 30 + strength * 10) / mass + 40 * get_bonus()
 
 
 func rotate(angle, delta):
-	print(angle)
 	var rot = rot_speed()
-	print(rot)
 	if angle < 0:
 		rotation += clamp(angle, -rot * delta, 0)
 	else:
@@ -174,9 +177,13 @@ var active_weapon = 0
 func add_weapon(weapon):
 	$Inventory.weapons.append(weapon)
 	weapon.connect("destroyed", self, "drop_weapon", [$Inventory.weapons.size() - 1])
-	weapon.connect("body_entered", self, "hit")
+	weapon.connect("area_entered", self, "hit")
 	weapon.connect("damage", self, "damage_weapon", [weapon])
 	hitable_children.append(weapon)
+	var t = weapon.find_node("CubeContainer").get_children()
+	for e in t:
+		hitable_children.append(e)
+		weapon.collision_layer = 4
 
 
 func damage_weapon(amount, weapon):
@@ -185,16 +192,27 @@ func damage_weapon(amount, weapon):
 	emit_signal("damage_dealt_to", amount, weapon)
 
 
-func hit(body):
-	if correct_hit_target(body):
-		body.emit_signal("damage", count_damage())
+func hit(area):
+	if correct_hit_target(area):
+		var total_damage = count_damage()
+		print("hit correct, dmg = " + str(total_damage))
+		area.emit_signal("damage", total_damage)
 
-func correct_hit_target(body):
-	return body.has_user_signal("damage") && hitable_children.find(body) == -1
+func correct_hit_target(area):
+	return hitable_children.find(area) == -1 && has_signal(area, "damage")
+
+func has_signal(area, signal_name):
+	var t = area.get_signal_list()
+	var ans = []
+	for e in t:
+		if e.name == signal_name:
+			return true
+	return false
+
 
 func count_damage():
 	var mass_effect = mass / max(100 - 2 * strength, 1) + $Inventory.weapons[active_weapon].weight / 10
-	return 10 * (dmg + get_bonus()) + pow(speed, 2) * mass_effect
+	return 10 * (1 + dmg + get_bonus()) + pow(speed, 2) * mass_effect
 
 
 var weapon_in_hand = false
@@ -209,7 +227,8 @@ func _on_WeaponTimer_timeout():
 		can_show_weapon = true
 
 func weapon_cooldown():
-	return 100 * $Inventory.weapons[active_weapon].weight / max(strength + 0.5 * speed, 1) - 50 * get_bonus()
+	return 0.1
+	return 0.01 * $Inventory.weapons[active_weapon].weight / max(strength + 0.5 * speed, 1) - 0.05 * get_bonus()
 
 
 func show_weapon():
@@ -223,7 +242,8 @@ func show_weapon():
 	$WeaponHolder/WeaponTimer.start()
 
 func weapon_hold_time():
-	return 1000 * (strength + 0.5 * speed) / $Inventory.weapons[active_weapon].weight + 300 * get_bonus()
+	return 0.5
+	return 1 + (strength + 0.5 * speed) / $Inventory.weapons[active_weapon].weight + 0.3 * get_bonus()
 
 var cash = []
 
@@ -234,6 +254,9 @@ func drop_weapon(index):
 	weapon.disconnect("body_entered", self, "hit")
 	weapon.disconnect("damage", self, "damage_weapon")
 	hitable_children.erase(weapon)
+	var t = weapon.find_node("CubeContainer").get_children()
+	for e in t:
+		hitable_children.erase(e)
 	weapon.queue_free()
 	$Inventory.weapons.remove(index)
 

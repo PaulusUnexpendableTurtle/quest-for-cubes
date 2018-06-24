@@ -1,13 +1,26 @@
 extends "res://scripts/Characters/Character.gd"
 
 func _ready():
-	pass
+	for cubes in $Body/CubeContainer.get_children():
+		cubes.collision_layer = 1
+
+
+func add_cube(point, cube):
+	.add_cube(point, cube)
+	cube.collision_layer = 1
+	cube.collision_mask = 32
+
+
+func add_weapon(weapon):
+	.add_weapon(weapon)
+	weapon.collision_mask = 6
+
 
 func press(action):
 	return Input.is_action_pressed(action)
 
 func get_rot_angle(angle):
-	if abs(angle) > PI:
+	if abs(angle) > abs(2 * PI + angle):
 		return 2 * PI + angle
 	else:
 		return angle

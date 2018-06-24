@@ -7,19 +7,14 @@ export (int) var LIFE
 var life
 
 func _ready():
-	pass
+	for cube in $CubeContainer.get_children():
+		cube.collision_layer = 8
+		cube.collision_mask = 16
 
 func _on_ready():
-	prepare_arrays()
-	
 	weight = WEIGHT
 	life = LIFE
-	
-	var cubes = $CubeContainer.get_children()
-	for cube in cubes:
-		$CubeContainer.remove_child(cube)
-		add_cube(cube.position / cell_size, cube)
-
+	._on_ready()
 
 func add_cube(point, cube):
 	var ret = .add_cube(point, cube)
@@ -33,6 +28,9 @@ func add_cube(point, cube):
 	
 	weight += cube.WEIGHT
 	life += cube.LIFE
+	
+	cube.collision_layer = 8
+	cube.collision_mask = 16
 	
 	return ret
 

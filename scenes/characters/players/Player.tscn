@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/characters/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Characters/Players/Player.gd" type="Script" id=2]
-[ext_resource path="res://scenes/cubes/Wood.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/cubes/Steel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/cube_holders/Weapon.tscn" type="PackedScene" id=5]
 
 [node name="Player" index="0" instance=ExtResource( 1 )]
 
@@ -21,39 +18,14 @@ LUCK = 0.0
 
 [node name="Body" parent="." index="0"]
 
+collision_layer = 1
+collision_mask = 1
 SIZE = Vector2( 9, 9 )
 CENTER = Vector2( 4, 4 )
 
-[node name="CubeContainer" parent="Body" index="1"]
+[node name="WeaponTimer" parent="WeaponHolder" index="0"]
 
-_sections_unfolded = [ "Transform" ]
-
-[node name="Wood" parent="Body/CubeContainer" index="0" instance=ExtResource( 3 )]
-
-[node name="Steel" parent="Body/CubeContainer" index="1" instance=ExtResource( 4 )]
-
-position = Vector2( 0, -40 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Weapon" parent="WeaponHolder" index="1" instance=ExtResource( 5 )]
-
-SIZE = Vector2( 5, 5 )
-CENTER = Vector2( 2, 2 )
-WEIGHT = 0
-LIFE = 0
-
-[node name="Steel" parent="WeaponHolder/Weapon/CubeContainer" index="0" instance=ExtResource( 4 )]
-
-[node name="Steel2" parent="WeaponHolder/Weapon/CubeContainer" index="1" instance=ExtResource( 4 )]
-
-position = Vector2( 0, -40 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Steel3" parent="WeaponHolder/Weapon/CubeContainer" index="2" instance=ExtResource( 4 )]
-
-position = Vector2( 0, -80 )
-_sections_unfolded = [ "Transform" ]
+one_shot = true
 
 
 [editable path="Body"]
-[editable path="WeaponHolder/Weapon"]

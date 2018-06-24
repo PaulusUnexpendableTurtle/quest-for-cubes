@@ -12,7 +12,7 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 MOMENTUM = null
 MASS = null
 HP = null
@@ -26,7 +26,9 @@ LUCK = null
 [node name="Body" parent="." index="0" instance=ExtResource( 2 )]
 
 position = Vector2( 0, 0 )
-_sections_unfolded = [ "Transform" ]
+collision_layer = 2
+collision_mask = 2
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="BodyCollision_copy" type="CollisionPolygon2D" parent="." index="1"]
 

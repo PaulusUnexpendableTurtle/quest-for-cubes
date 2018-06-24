@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/example.gd" type="Script" id=1]
+[ext_resource path="res://scenes/cubes/Steel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/characters/players/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/cubes/Wood.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/cube_holders/Weapon.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/steel.png" type="Texture" id=6]
+
+[node name="Node2D" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Steel" parent="." index="0" instance=ExtResource( 2 )]
+
+position = Vector2( 508.778, 394.507 )
+
+[node name="Player" parent="." index="1" instance=ExtResource( 3 )]
+
+[node name="Wood" parent="Player/Body/CubeContainer" index="0" instance=ExtResource( 4 )]
+
+[node name="Weapon" parent="Player/WeaponHolder" index="1" instance=ExtResource( 5 )]
+
+position = Vector2( 0, 0 )
+_sections_unfolded = [ "Transform" ]
+SIZE = Vector2( 1, 2 )
+CENTER = Vector2( 0, 1 )
+WEIGHT = 0
+LIFE = 0
+
+[node name="Wood" parent="Player/WeaponHolder/Weapon/CubeContainer" index="0" instance=ExtResource( 4 )]
+
+[node name="Wood2" parent="Player/WeaponHolder/Weapon/CubeContainer" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 0, -40 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D" index="0"]
+
+position = Vector2( 416.273, 269.682 )
+scale = Vector2( 1, 13.2598 )
+texture = ExtResource( 6 )
+
+[connection signal="damage" from="Steel" to="." method="_on_Steel_damage"]
+
+[connection signal="destroyed" from="Steel" to="." method="_on_Steel_destroyed"]
+
+
+[editable path="Steel"]
+[editable path="Player"]
+[editable path="Player/Body"]
+[editable path="Player/WeaponHolder/Weapon"]

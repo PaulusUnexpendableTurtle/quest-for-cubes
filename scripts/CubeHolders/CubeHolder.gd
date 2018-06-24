@@ -100,24 +100,29 @@ func remove_cube(point):
 	
 	for d in directions:
 		if !dfs(point + d):
-			ans = ans + remove_all(point + d)
+			var t = remove_all(point + d)
+			for e in t:
+				ans.append(e)
 	
 	rebuild_collision_shape()
 	
 	return ans
 
 
-var dfs_count = 0
 var used = [[]]
+func empty_used():
+	for i in range(SIZE.x):
+		for j in range(SIZE.y):
+			used[i][j] = false
 
 func dfs(point):
-	dfs_count += 1
+	empty_used()
 	return inn_dfs(point)
 
 func inn_dfs(v):
 	if v == CENTER:
 		return true
-	used[v.x][v.y] = dfs_count
+	used[v.x][v.y] = true
 	for d in directions:
 		if has_free_cube(v + d) && inn_dfs(v + d):
 			return true
@@ -136,39 +141,47 @@ func remove_all(v):
 	set_cube(v, null)
 	
 	for d in directions:
-		ans = ans + remove_all(v + d)
+		var t = remove_all(v + d)
+		for e in t:
+			ans.append(e)
 	
 	return ans
 
 
 func rebuild_collision_shape():
 	var ans = []
+	var found = false
 	for i in range(SIZE.x):
 		for j in range(SIZE.y):
 			if cubes[i][j] != null:
-				dfs_count += 1
+				empty_used()
 				insert_to_shape(Vector2(i, j), TOP, ans)
+				found = true
 				break
+		if found:
+			break
 	skip_extra(ans)
+	print(ans)
 	$CollisionPolygon2D.polygon = PoolVector2Array(ans)
 
 
 func insert_to_shape(v, orient, ans):
-	used[v.x][v.y] = dfs_count
+	used[v.x][v.y] = true
 	
 	var diag = rot(orient, 0).x * rot(orient, 0).y != 0
 	
 	if diag:
 		ans.append(vertex(v, rot(orient, 4)) + rot(orient, 7) * margin)
 	
-	for i in range(7):
+	for i in range(8):
 		var dir = rot(orient, i + 5)
 		if !has_free_cube(v + dir):
-			ans.append(vertex(v, dir))
+			if i != 7:
+				ans.append(vertex(v, dir))
 			continue
 		if dir.x * dir.y != 0:
 			ans.append(vertex(v, dir) + rot(orient, i + 2) * margin)
-		insert_to_shape(v + dir, i + 5, ans)
+		insert_to_shape(v + dir, (orient + i + 5) % 8, ans)
 		if dir.x * dir.y != 0:
 			ans.append(vertex(v, dir) + rot(orient, i) * margin)
 	
@@ -176,13 +189,31 @@ func insert_to_shape(v, orient, ans):
 		ans.append(vertex(v, rot(orient, 4)) + rot(orient, 1) * margin)
 
 
+var eps = 0.0001
 func skip_extra(arr):
-	#skips dots which are literally between its neighbors
-	pass
+	var include = []
+	var size = arr.size()
+	for i in range(size):
+		var p = i - 1
+		if p < 0:
+			p += size
+		var n = i + 1
+		if n >= size:
+			n -= size
+		if abs(abs((arr[p] - arr[i]).angle_to(arr[n] - arr[i])) - PI) < eps:
+			include.append(false)
+		else:
+			include.append(true)
+	var pointer = 0
+	for i in range(arr.size()):
+		if include[i]:
+			pointer += 1
+		else:
+			arr.remove(pointer)
 
 
 func has_free_cube(v):
-	return check_bounds(v) && get_cube(v) != null && used[v.x][v.y] != dfs_count
+	return check_bounds(v) && get_cube(v) != null && !used[v.x][v.y]
 
 func rot(orient, i):
 	return directions[(orient + i) % 8]
@@ -190,7 +221,7 @@ func rot(orient, i):
 var margin = 0.25
 
 func vertex(coords, shift):
-	return (coords + shift * 0.5) * cell_size - shift * margin
+	return (coords - CENTER + shift * 0.5) * cell_size - shift * margin
 
 func check_bounds(point):
 	return 0 <= point.x && point.x < SIZE.x && 0 <= point.y && point.y < SIZE.y

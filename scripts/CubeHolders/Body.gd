@@ -3,17 +3,8 @@ extends "res://scripts/CubeHolders/CubeHolder.gd"
 func _ready():
 	pass
 
-func _on_ready():
-	prepare_arrays()
-	var cubes = $CubeContainer.get_children()
-	for cube in cubes:
-		$CubeContainer.remove_child(cube)
-		add_cube(cube.position / cell_size, cube)
-
 func add_cube(point, cube):
-	print(point, cube)
 	var ret = .add_cube(point, cube)
-	print(ret)
 	
 	if ret != null && ret.type == "Impossible":
 		return ret

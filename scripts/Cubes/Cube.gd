@@ -7,7 +7,7 @@ export (int) var LIFE
 var life
 
 func _ready():
-	pass
+	life = LIFE
 
 export (String) var type = "Cube"
 

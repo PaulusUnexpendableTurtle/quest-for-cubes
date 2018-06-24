@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Cubes/Cube.gd" type="Script" id=1]
 [ext_resource path="res://assets/cube_texture_proto.png" type="Texture" id=2]
@@ -11,11 +11,6 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
-
-[sub_resource type="RectangleShape2D" id=2]
-
-custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
 
 [node name="Cube" type="Area2D" index="0"]
 
@@ -40,10 +35,9 @@ type = "Cube"
 frames = SubResource( 1 )
 animation = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
 
-scale = Vector2( 1.975, 1.975 )
-shape = SubResource( 2 )
-_sections_unfolded = [ "Transform" ]
+build_mode = 0
+polygon = PoolVector2Array( 19.75, 19.75, 19.75, -19.75, -19.75, -19.75, -19.75, 19.75 )
 
 
