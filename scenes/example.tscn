@@ -1,19 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/example.gd" type="Script" id=1]
 [ext_resource path="res://scenes/cubes/Steel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/characters/players/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/cubes/Wood.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/cube_holders/Weapon.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/steel.png" type="Texture" id=6]
-[ext_resource path="res://scenes/characters/foes/Foe.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/ex_Foe.gd" type="Script" id=8]
-[ext_resource path="res://scenes/cubes/Stone.tscn" type="PackedScene" id=9]
-
-[sub_resource type="RectangleShape2D" id=1]
-
-custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
+[ext_resource path="res://scenes/characters/foes/Foe.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/ex_Foe.gd" type="Script" id=7]
+[ext_resource path="res://scenes/cubes/Stone.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/walls/Wall.tscn" type="PackedScene" id=9]
 
 [node name="Node2D" type="Node2D" index="0"]
 
@@ -58,35 +53,10 @@ position = Vector2( 0, -40 )
 
 position = Vector2( 0, -80 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
-
-position = Vector2( 374.101, 244.866 )
-input_pickable = false
-collision_layer = 64
-collision_mask = 64
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
-_sections_unfolded = [ "Collision" ]
-
-[node name="Sprite" type="Sprite" parent="StaticBody2D" index="0"]
-
-position = Vector2( -5.44153, 23.1263 )
-scale = Vector2( 1, 13.2598 )
-texture = ExtResource( 6 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="1"]
-
-position = Vector2( -4.88311, 22.2565 )
-scale = Vector2( 1.83649, 26.5612 )
-shape = SubResource( 1 )
-
-[node name="Foe" parent="." index="3" instance=ExtResource( 7 )]
+[node name="Foe" parent="." index="2" instance=ExtResource( 6 )]
 
 position = Vector2( 189.091, 209.497 )
-script = ExtResource( 8 )
+script = ExtResource( 7 )
 MOMENTUM = 0.0
 MASS = 0.0
 HP = 0.0
@@ -105,7 +75,7 @@ collision_mask = 0
 SIZE = Vector2( 1, 1 )
 CENTER = Vector2( 0, 0 )
 
-[node name="Stone" parent="Foe/Body/CubeContainer" index="0" instance=ExtResource( 9 )]
+[node name="Stone" parent="Foe/Body/CubeContainer" index="0" instance=ExtResource( 8 )]
 
 [node name="Weapon" parent="Foe/WeaponHolder" index="0" instance=ExtResource( 5 )]
 
@@ -119,6 +89,16 @@ LIFE = 0.1
 [node name="Wood2" parent="Foe/WeaponHolder/Weapon/CubeContainer" index="1" instance=ExtResource( 4 )]
 
 position = Vector2( 0, -40 )
+
+[node name="Wall" parent="." index="3" instance=ExtResource( 9 )]
+
+position = Vector2( 346.894, 182.289 )
+
+[node name="Wall2" parent="." index="4" instance=ExtResource( 9 )]
+
+position = Vector2( 180.929, 443.48 )
+rotation = 1.53764
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [connection signal="damage" from="Steel" to="." method="_on_Steel_damage"]
 
