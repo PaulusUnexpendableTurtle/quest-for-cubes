@@ -2,53 +2,66 @@ extends KinematicBody2D
 
 
 func _ready():
+	_on_ready()
+
+
+func _on_ready():
 	_on_Body_body_changed()
 	
-	var t = $Body/CubeContainer.get_children()
-	for e in t:
-		hitable_children.append(e)
+	for cube in $Body/CubeContainer.get_children():
+		cube.connect("damage", self, "damage_cube", [cube])
 	
-	if $WeaponHolder.get_child_count() > 1:
-		var arr = $WeaponHolder.get_children()
-		for weapon in arr:
-			if weapon == $WeaponHolder/WeaponTimer:
-				continue
-			$WeaponHolder.remove_child(weapon)
-			add_weapon(weapon)
+	var weapons = $WeaponHolder.get_children()
+	for weapon in weapons:
+		$WeaponHolder.remove_child(weapon)
+		add_weapon(weapon)
 	
-	hitable_children.append($Body)
+	set_layer(6)
+	set_masks([6])
+
+
+var team_number = 0
+func set_team_number(number):
+	team_number = number
+	$Body.set_team_number(number)
+	for weapon in $Inventory.weapons:
+		weapon.set_team_number(number)
+
+
+func set_layer(number):
+	collision_layer = 1 << number
+func set_masks(masks):
+	collision_mask = 0
+	for mask in masks:
+		collision_mask |= 1 << mask
 
 
 func _on_Body_body_changed():
 	count_stats()
 	$BodyCollision_copy.polygon = $Body/CollisionPolygon2D.polygon
 
+
 export (float) var MOMENTUM
-var momentum
-
 export (float) var MASS
-var mass
-
 export (float) var HP
-var hp
-
 export (float) var ARMOR
-var armor
-
 export (float) var STRENGTH
-var strength
-
 export (float) var DMG
-var dmg
-
 export (float) var WEAPON_HP
-var weapon_hp
-
 export (float) var SPEED
-var speed
-
 export (float) var LUCK
+
+
+var armor
+var hp
+var mass
+var momentum
+var strength
+var dmg
+var weapon_hp
+var speed
 var luck
+
 
 func count_stats():
 	var arr = $Body.cubes
@@ -121,7 +134,6 @@ func luck_upgrade(v):
 	return false
 
 
-var hitable_children = []
 signal damage_dealt_to(amount, damaged_object)
 
 func add_cube(point, cube):
@@ -132,14 +144,13 @@ func add_cube(point, cube):
 	
 	if ret != null:
 		ret.disconnect("damage", self, "damage_cube")
-		hitable_children.erase(ret)
 	cube.connect("damage", self, "damage_cube", [cube])
-	hitable_children.append(cube)
 	
 	return ret
 
 
 func damage_cube(amount, cube):
+	print(str(amount) + " " + str(cube))
 	amount = clamp(amount - (armor + 5 * get_bonus()), 0, amount)
 	cube.change_life(-amount)
 	emit_signal("damage_dealt_to", amount, cube)
@@ -149,7 +160,6 @@ func remove_cube(point):
 	var ret = $Body.remove_cube(point)
 	for cube in ret:
 		cube.disconnect("damage", self, "damage_cube")
-		hitable_children.erase(cube)
 	return ret
 
 
@@ -158,7 +168,7 @@ func move(direction, delta):
 	position += direction * body_speed() * delta
 
 func body_speed():
-	return (2000 + speed * 30 + strength * 10) / mass + 40 * get_bonus()
+	return (2000 + speed * 30 + strength * 10) / (1 + mass) + 40 * get_bonus()
 
 
 func rotate(angle, delta):
@@ -176,14 +186,12 @@ var active_weapon = 0
 
 func add_weapon(weapon):
 	$Inventory.weapons.append(weapon)
+	
 	weapon.connect("destroyed", self, "drop_weapon", [$Inventory.weapons.size() - 1])
 	weapon.connect("area_entered", self, "hit")
 	weapon.connect("damage", self, "damage_weapon", [weapon])
-	hitable_children.append(weapon)
-	var t = weapon.find_node("CubeContainer").get_children()
-	for e in t:
-		hitable_children.append(e)
-		weapon.collision_layer = 4
+	
+	weapon.set_team_number(team_number)
 
 
 func damage_weapon(amount, weapon):
@@ -199,7 +207,7 @@ func hit(area):
 		area.emit_signal("damage", total_damage)
 
 func correct_hit_target(area):
-	return hitable_children.find(area) == -1 && has_signal(area, "damage")
+	return has_signal(area, "damage")
 
 func has_signal(area, signal_name):
 	var t = area.get_signal_list()
@@ -211,24 +219,30 @@ func has_signal(area, signal_name):
 
 
 func count_damage():
-	var mass_effect = mass / max(100 - 2 * strength, 1) + $Inventory.weapons[active_weapon].weight / 10
-	return 10 * (1 + dmg + get_bonus()) + pow(speed, 2) * mass_effect
+	return 10
+	if $Inventory.weapons.size() > active_weapon:
+		var mass_effect = mass / max(100 - 2 * strength, 1) + $Inventory.weapons[active_weapon].weight / 10
+		return 10 * (1 + dmg + get_bonus()) + pow(speed, 2) * mass_effect
+	return 0
 
 
 var weapon_in_hand = false
 var can_show_weapon = true
 func _on_WeaponTimer_timeout():
 	if weapon_in_hand:
-		$WeaponHolder.remove_child($Inventory.weapons[active_weapon])
+		if $Inventory.weapons.size() > active_weapon:
+			$WeaponHolder.remove_child($Inventory.weapons[active_weapon])
 		weapon_in_hand = false
-		$WeaponHolder/WeaponTimer.wait_time = weapon_cooldown()
-		$WeaponHolder/WeaponTimer.start()
+		$WeaponTimer.wait_time = weapon_cooldown()
+		$WeaponTimer.start()
 	else:
 		can_show_weapon = true
 
 func weapon_cooldown():
+	if $Inventory.weapons.size() > active_weapon:
+		return 0.1
+		return 0.01 * $Inventory.weapons[active_weapon].weight / max(strength + 0.5 * speed, 1) - 0.05 * get_bonus()
 	return 0.1
-	return 0.01 * $Inventory.weapons[active_weapon].weight / max(strength + 0.5 * speed, 1) - 0.05 * get_bonus()
 
 
 func show_weapon():
@@ -237,28 +251,36 @@ func show_weapon():
 	weapon_in_hand = true
 	can_show_weapon = false
 	#CENTER of Weapon is at the CENTER of Body - (0, 0)
-	$WeaponHolder.add_child($Inventory.weapons[active_weapon])
-	$WeaponHolder/WeaponTimer.wait_time = weapon_hold_time()
-	$WeaponHolder/WeaponTimer.start()
+	if $Inventory.weapons.size() > active_weapon:
+		$WeaponHolder.add_child($Inventory.weapons[active_weapon])
+	$WeaponTimer.wait_time = weapon_hold_time()
+	$WeaponTimer.start()
 
 func weapon_hold_time():
+	if $Inventory.weapons.size() > active_weapon:
+		return 0.5 + (strength + 0.5 * speed) / $Inventory.weapons[active_weapon].weight + 0.3 * get_bonus()
 	return 0.5
-	return 1 + (strength + 0.5 * speed) / $Inventory.weapons[active_weapon].weight + 0.3 * get_bonus()
 
 var cash = []
 
-func drop_weapon(index):
-	var weapon = $Inventory.weapons[index]
+func drop_weapon(weapon):
+	#TODO: fix dis
+	var t = $WeaponHolder.get_children()
+	if t[0] == weapon:
+		$WeaponHolder.remove_child(weapon)
+	
 	cash = cash + weapon.remove_cube(weapon.CENTER)
+	
 	weapon.disconnect("destroyed", self, "drop_weapon")
 	weapon.disconnect("body_entered", self, "hit")
 	weapon.disconnect("damage", self, "damage_weapon")
-	hitable_children.erase(weapon)
-	var t = weapon.find_node("CubeContainer").get_children()
-	for e in t:
-		hitable_children.erase(e)
+	
 	weapon.queue_free()
-	$Inventory.weapons.remove(index)
+	
+	$Inventory.weapons.erase(weapon)
+	
+	if $Inventory.weapons.size() == active_weapon:
+		active_weapon = max(active_weapon - 1, 0)
 
 
 func end_fight():

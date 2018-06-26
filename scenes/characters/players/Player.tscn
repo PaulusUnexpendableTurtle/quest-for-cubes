@@ -23,7 +23,7 @@ collision_mask = 1
 SIZE = Vector2( 9, 9 )
 CENTER = Vector2( 4, 4 )
 
-[node name="WeaponTimer" parent="WeaponHolder" index="0"]
+[node name="WeaponTimer" parent="." index="4"]
 
 one_shot = true
 

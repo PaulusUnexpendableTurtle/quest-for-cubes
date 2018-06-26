@@ -9,6 +9,15 @@ var life
 func _ready():
 	life = LIFE
 
+
+func set_layer(number):
+	collision_layer = 1 << number
+func set_masks(masks):
+	collision_mask = 0
+	for mask in masks:
+		collision_mask |= 1 << mask
+
+
 export (String) var type = "Cube"
 
 func set_sprite(frames):
@@ -36,6 +45,7 @@ signal destroyed
 signal damage(amount)
 
 func change_life(amount):
+	print("change life of " + str(self) + ": " + str(amount))
 	life = clamp(life + amount, 0, LIFE)
 	if life == 0:
 		emit_signal("destroyed")

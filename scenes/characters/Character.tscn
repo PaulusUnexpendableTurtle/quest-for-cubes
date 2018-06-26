@@ -43,17 +43,17 @@ script = ExtResource( 3 )
 
 [node name="WeaponHolder" type="Node2D" parent="." index="3"]
 
-[node name="WeaponTimer" type="Timer" parent="WeaponHolder" index="0"]
+[node name="WeaponTimer" type="Timer" parent="." index="4"]
 
 process_mode = 1
 wait_time = 1.0
-one_shot = false
+one_shot = true
 autostart = false
 
 [connection signal="body_changed" from="Body" to="." method="_on_Body_body_changed"]
 
 [connection signal="dead" from="Body" to="." method="die"]
 
-[connection signal="timeout" from="WeaponHolder/WeaponTimer" to="." method="_on_WeaponTimer_timeout"]
+[connection signal="timeout" from="WeaponTimer" to="." method="_on_WeaponTimer_timeout"]
 
 

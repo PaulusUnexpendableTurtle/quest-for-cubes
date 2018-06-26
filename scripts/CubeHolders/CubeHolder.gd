@@ -18,6 +18,17 @@ var cell_size = 40
 func _ready():
 	_on_ready()
 
+
+func set_layer(number):
+	collision_layer = 1 << number
+	print("Layer of " + str(self) + ": " + str(collision_layer))
+func set_masks(masks):
+	collision_mask = 0
+	for mask in masks:
+		collision_mask |= 1 << mask
+	print("Mask of " + str(self) + ": " + str(collision_mask))
+
+
 func _on_ready():
 	prepare_arrays()
 	var cubes = $CubeContainer.get_children()
@@ -99,7 +110,7 @@ func remove_cube(point):
 	set_cube(point, null)
 	
 	for d in directions:
-		if !dfs(point + d):
+		if has_free_cube(point + d) && !dfs(point + d):
 			var t = remove_all(point + d)
 			for e in t:
 				ans.append(e)

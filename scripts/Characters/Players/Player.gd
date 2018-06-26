@@ -1,19 +1,13 @@
 extends "res://scripts/Characters/Character.gd"
 
 func _ready():
-	for cubes in $Body/CubeContainer.get_children():
-		cubes.collision_layer = 1
+	pass
 
+export (int) var TEAM
 
-func add_cube(point, cube):
-	.add_cube(point, cube)
-	cube.collision_layer = 1
-	cube.collision_mask = 32
-
-
-func add_weapon(weapon):
-	.add_weapon(weapon)
-	weapon.collision_mask = 6
+func _on_ready():
+	._on_ready()
+	set_team_number(TEAM)
 
 
 func press(action):

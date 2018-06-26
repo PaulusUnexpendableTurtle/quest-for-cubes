@@ -1,15 +1,16 @@
 extends "res://scripts/Characters/Character.gd"
 
 func _ready():
+	pass
+
+
+func _on_ready():
 	time = 0
-	for cube in $Body/CubeContainer.get_children():
-		cube.collsion_layer = 2
+	._on_ready()
+	set_team_number(5)
 
-func add_weapon(weapon):
-	.add_weapon(weapon)
-	weapon.collision_mask = 7
 
-export (int) var TIME_PER_DECISION
+export (float) var TIME_PER_DECISION
 var time
 
 #link this signal to game scene to send player's position
@@ -18,7 +19,7 @@ var player_position
 
 func catch_player_position(position, delta):
 	var passes = floor(time / TIME_PER_DECISION)
-	time %= TIME_PER_DECISION
+	time = time - passes * TIME_PER_DECISION
 	player_position = position
 	decide(delta, passes)
 
