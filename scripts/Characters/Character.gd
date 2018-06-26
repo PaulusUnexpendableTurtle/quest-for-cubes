@@ -15,9 +15,6 @@ func _on_ready():
 	for weapon in weapons:
 		$WeaponHolder.remove_child(weapon)
 		add_weapon(weapon)
-	
-	set_layer(6)
-	set_masks([6])
 
 
 var team_number = 0
@@ -26,14 +23,6 @@ func set_team_number(number):
 	$Body.set_team_number(number)
 	for weapon in $Inventory.weapons:
 		weapon.set_team_number(number)
-
-
-func set_layer(number):
-	collision_layer = 1 << number
-func set_masks(masks):
-	collision_mask = 0
-	for mask in masks:
-		collision_mask |= 1 << mask
 
 
 func _on_Body_body_changed():
@@ -165,11 +154,17 @@ func remove_cube(point):
 
 func move(direction, delta):
 	direction = direction.normalized()
-	position += direction * body_speed() * delta
+	move_and_collide(direction * body_speed() * delta)
 
 func body_speed():
 	return (2000 + speed * 30 + strength * 10) / (1 + mass) + 40 * get_bonus()
 
+
+func get_rot_angle(angle):
+	if abs(angle) > abs(2 * PI + angle):
+		return 2 * PI + angle
+	else:
+		return angle
 
 func rotate(angle, delta):
 	var rot = rot_speed()

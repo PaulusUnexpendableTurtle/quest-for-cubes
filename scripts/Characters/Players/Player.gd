@@ -13,12 +13,6 @@ func _on_ready():
 func press(action):
 	return Input.is_action_pressed(action)
 
-func get_rot_angle(angle):
-	if abs(angle) > abs(2 * PI + angle):
-		return 2 * PI + angle
-	else:
-		return angle
-
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:

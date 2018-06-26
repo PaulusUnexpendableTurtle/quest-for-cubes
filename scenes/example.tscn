@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/example.gd" type="Script" id=1]
 [ext_resource path="res://scenes/cubes/Steel.tscn" type="PackedScene" id=2]
@@ -9,6 +9,11 @@
 [ext_resource path="res://scenes/characters/foes/Foe.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/ex_Foe.gd" type="Script" id=8]
 [ext_resource path="res://scenes/cubes/Stone.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
 
 [node name="Node2D" type="Node2D" index="0"]
 
@@ -26,6 +31,11 @@ _sections_unfolded = [ "Collision" ]
 [node name="Player" parent="." index="1" instance=ExtResource( 3 )]
 
 TEAM = 1
+
+[node name="Body" parent="Player" index="0"]
+
+collision_layer = 512
+collision_mask = 0
 
 [node name="Wood" parent="Player/Body/CubeContainer" index="0" instance=ExtResource( 4 )]
 
@@ -50,19 +60,28 @@ position = Vector2( 0, -80 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
 
+position = Vector2( 374.101, 244.866 )
 input_pickable = false
-collision_layer = 1
-collision_mask = 1
+collision_layer = 64
+collision_mask = 64
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
+_sections_unfolded = [ "Collision" ]
 
 [node name="Sprite" type="Sprite" parent="StaticBody2D" index="0"]
 
-position = Vector2( 416.273, 269.682 )
+position = Vector2( -5.44153, 23.1263 )
 scale = Vector2( 1, 13.2598 )
 texture = ExtResource( 6 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="1"]
+
+position = Vector2( -4.88311, 22.2565 )
+scale = Vector2( 1.83649, 26.5612 )
+shape = SubResource( 1 )
 
 [node name="Foe" parent="." index="3" instance=ExtResource( 7 )]
 
@@ -81,6 +100,8 @@ TIME_PER_DECISION = 0.01
 
 [node name="Body" parent="Foe" index="0"]
 
+collision_layer = 512
+collision_mask = 0
 SIZE = Vector2( 1, 1 )
 CENTER = Vector2( 0, 0 )
 

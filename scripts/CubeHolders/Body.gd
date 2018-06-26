@@ -4,13 +4,6 @@ func _ready():
 	pass
 
 
-func _on_ready():
-	._on_ready()
-	
-	set_layer(9)
-	set_masks([])
-
-
 var team_number = 0
 func set_team_number(number):
 	team_number = number
