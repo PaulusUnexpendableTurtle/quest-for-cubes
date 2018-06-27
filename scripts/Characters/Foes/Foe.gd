@@ -31,4 +31,4 @@ func decide(delta, passes):
 func _process(delta):
 	time += delta
 	if time >= TIME_PER_DECISION:
-		emit_signal("request_player_position", delta)
+		emit_signal("request_players_positions", delta)

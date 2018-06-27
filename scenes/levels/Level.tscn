@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scripts/Levels/Level.gd" type="Script" id=1]
+[ext_resource path="res://assets/floor.png" type="Texture" id=2]
 
 [node name="Level" type="Node2D" index="0"]
 
@@ -10,14 +11,22 @@ TEAM_2_START = null
 TEAM_3_START = null
 TEAM_4_START = null
 
-[node name="Walls" type="Node2D" parent="." index="0"]
+[node name="Floor" type="Sprite" parent="." index="0"]
 
-[node name="Buttons" type="Node2D" parent="." index="1"]
+position = Vector2( 512, 300 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1024, 600 )
+_sections_unfolded = [ "Region", "Transform" ]
 
-[node name="Drops" type="Node2D" parent="." index="2"]
+[node name="Walls" type="Node2D" parent="." index="1"]
 
-[node name="Players" type="Node2D" parent="." index="3"]
+[node name="Buttons" type="Node2D" parent="." index="2"]
 
-[node name="Foes" type="Node2D" parent="." index="4"]
+[node name="Drops" type="Node2D" parent="." index="3"]
+
+[node name="Players" type="Node2D" parent="." index="4"]
+
+[node name="Foes" type="Node2D" parent="." index="5"]
 
 

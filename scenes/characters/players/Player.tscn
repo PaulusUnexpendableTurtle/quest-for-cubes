@@ -6,26 +6,12 @@
 [node name="Player" index="0" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
-MOMENTUM = 0.0
-MASS = 0.0
-HP = 0.0
-ARMOR = 0.0
-STRENGTH = 0.0
-DMG = 0.0
-WEAPON_HP = 0.0
-SPEED = 0.0
-LUCK = 0.0
+TEAM = 1
 
-[node name="Body" parent="." index="0"]
+[node name="Body" parent="." index="3"]
 
-collision_layer = 1
-collision_mask = 1
 SIZE = Vector2( 9, 9 )
 CENTER = Vector2( 4, 4 )
-
-[node name="WeaponTimer" parent="." index="4"]
-
-one_shot = true
 
 
 [editable path="Body"]

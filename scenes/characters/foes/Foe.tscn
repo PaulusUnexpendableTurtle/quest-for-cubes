@@ -6,6 +6,15 @@
 [node name="Foe" index="0" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
-TIME_PER_DECISION = null
+MOMENTUM = 0.0
+MASS = 0.0
+HP = 0.0
+ARMOR = 0.0
+STRENGTH = 0.0
+DMG = 0.0
+WEAPON_HP = 0.0
+SPEED = 0.0
+LUCK = 0.0
+TIME_PER_DECISION = 0.0
 
 

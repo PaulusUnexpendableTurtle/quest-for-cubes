@@ -13,6 +13,10 @@ config_version=3
 config/name="QuestForCubes"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=1000
+
 [physics]
 
 2d/default_gravity=0

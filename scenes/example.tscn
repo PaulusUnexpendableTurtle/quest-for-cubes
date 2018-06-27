@@ -1,25 +1,36 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/example.gd" type="Script" id=1]
-[ext_resource path="res://scenes/obstacles/Wall.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/obstacles/Button.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/cubes/Steel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/characters/players/Player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/cubes/Wood.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/player_ex/p0.png" type="Texture" id=7]
-[ext_resource path="res://assets/player_ex/p1.png" type="Texture" id=8]
-[ext_resource path="res://assets/player_ex/p2.png" type="Texture" id=9]
-[ext_resource path="res://assets/player_ex/p3.png" type="Texture" id=10]
-[ext_resource path="res://assets/player_ex/p4.png" type="Texture" id=11]
-[ext_resource path="res://scenes/cube_holders/Weapon.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/characters/foes/Foe.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/ex_Foe.gd" type="Script" id=14]
-[ext_resource path="res://scenes/cubes/Stone.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/floor.png" type="Texture" id=2]
+[ext_resource path="res://scenes/obstacles/Wall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/obstacles/Button.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/cubes/Steel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/characters/players/Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/cubes/Wood.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/player_ex/p0.png" type="Texture" id=8]
+[ext_resource path="res://assets/player_ex/p1.png" type="Texture" id=9]
+[ext_resource path="res://assets/player_ex/p2.png" type="Texture" id=10]
+[ext_resource path="res://assets/player_ex/p3.png" type="Texture" id=11]
+[ext_resource path="res://assets/player_ex/p4.png" type="Texture" id=12]
+[ext_resource path="res://scenes/cube_holders/Weapon.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/characters/foes/Foe.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/ex_Foe.gd" type="Script" id=15]
+[ext_resource path="res://scenes/cubes/Stone.tscn" type="PackedScene" id=16]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 20, 200 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 20, 140 )
 
 [sub_resource type="SpriteFrames" id=1]
 
 animations = [ {
-"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -30,30 +41,67 @@ animations = [ {
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Wall" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Floor" type="Sprite" parent="." index="0"]
 
-position = Vector2( 346.894, 182.289 )
+position = Vector2( 512, 300 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1024, 600 )
+_sections_unfolded = [ "Region", "Transform" ]
 
-[node name="Wall2" parent="." index="1" instance=ExtResource( 2 )]
+[node name="Walls" type="Node2D" parent="." index="1"]
 
-position = Vector2( 180.929, 443.48 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Wall" parent="Walls" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 340, 180 )
+
+[node name="Wall2" parent="Walls" index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 180, 420 )
 rotation = 1.5708
 
-[node name="Button" parent="." index="2" instance=ExtResource( 3 )]
+[node name="Wall3" parent="Walls" index="2" instance=ExtResource( 3 )]
+
+position = Vector2( 20, 200 )
+
+[node name="Sprite" parent="Walls/Wall3" index="0"]
+
+region_rect = Rect2( 0, 0, 40, 400 )
+
+[node name="CollisionShape2D" parent="Walls/Wall3" index="1"]
+
+shape = SubResource( 2 )
+
+[node name="Wall4" parent="Walls" index="3" instance=ExtResource( 3 )]
+
+position = Vector2( 180, 20 )
+rotation = 1.5708
+
+[node name="Sprite" parent="Walls/Wall4" index="0"]
+
+region_rect = Rect2( 0, 0, 40, 280 )
+
+[node name="CollisionShape2D" parent="Walls/Wall4" index="1"]
+
+shape = SubResource( 3 )
+
+[node name="Button" parent="." index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 495.174, 195.893 )
 collision_layer = 0
 collision_mask = 768
 _sections_unfolded = [ "Collision" ]
 
-[node name="Button2" parent="." index="3" instance=ExtResource( 3 )]
+[node name="Button2" parent="." index="3" instance=ExtResource( 4 )]
 
 position = Vector2( 628.49, 198.614 )
 collision_layer = 0
 collision_mask = 768
 _sections_unfolded = [ "Collision" ]
 
-[node name="Steel" parent="." index="4" instance=ExtResource( 4 )]
+[node name="Steel" parent="." index="4" instance=ExtResource( 5 )]
 
 editor/display_folded = true
 visible = false
@@ -62,8 +110,10 @@ collision_layer = 0
 collision_mask = 0
 _sections_unfolded = [ "Collision" ]
 
-[node name="Player" parent="." index="5" instance=ExtResource( 5 )]
+[node name="Player" parent="." index="5" instance=ExtResource( 6 )]
 
+editor/display_folded = true
+position = Vector2( 60, 60 )
 DMG = 800.0
 TEAM = 1
 
@@ -72,13 +122,13 @@ TEAM = 1
 collision_layer = 512
 collision_mask = 0
 
-[node name="Wood" parent="Player/Body/CubeContainer" index="0" instance=ExtResource( 6 )]
+[node name="Wood" parent="Player/Body/CubeContainer" index="0" instance=ExtResource( 7 )]
 
 [node name="AnimatedSprite" parent="Player/Body/CubeContainer/Wood" index="0"]
 
 frames = SubResource( 1 )
 
-[node name="Weapon" parent="Player/WeaponHolder" index="0" instance=ExtResource( 12 )]
+[node name="Weapon" parent="Player/WeaponHolder" index="0" instance=ExtResource( 13 )]
 
 position = Vector2( 0, 0 )
 _sections_unfolded = [ "Transform" ]
@@ -87,21 +137,21 @@ CENTER = Vector2( 0, 2 )
 WEIGHT = 0.0
 LIFE = 0.1
 
-[node name="Wood" parent="Player/WeaponHolder/Weapon/CubeContainer" index="0" instance=ExtResource( 6 )]
+[node name="Wood" parent="Player/WeaponHolder/Weapon/CubeContainer" index="0" instance=ExtResource( 7 )]
 
-[node name="Wood2" parent="Player/WeaponHolder/Weapon/CubeContainer" index="1" instance=ExtResource( 6 )]
+[node name="Wood2" parent="Player/WeaponHolder/Weapon/CubeContainer" index="1" instance=ExtResource( 7 )]
 
 position = Vector2( 0, -40 )
 
-[node name="Wood3" parent="Player/WeaponHolder/Weapon/CubeContainer" index="2" instance=ExtResource( 6 )]
+[node name="Wood3" parent="Player/WeaponHolder/Weapon/CubeContainer" index="2" instance=ExtResource( 7 )]
 
 position = Vector2( 0, -80 )
 
-[node name="Foe" parent="." index="6" instance=ExtResource( 13 )]
+[node name="Foe" parent="." index="6" instance=ExtResource( 14 )]
 
 editor/display_folded = true
-position = Vector2( 189.091, 209.497 )
-script = ExtResource( 14 )
+position = Vector2( 296.112, 307.474 )
+script = ExtResource( 15 )
 MOMENTUM = 0.0
 MASS = 0.0
 HP = 0.0
@@ -120,18 +170,18 @@ collision_mask = 0
 SIZE = Vector2( 1, 1 )
 CENTER = Vector2( 0, 0 )
 
-[node name="Stone" parent="Foe/Body/CubeContainer" index="0" instance=ExtResource( 15 )]
+[node name="Stone" parent="Foe/Body/CubeContainer" index="0" instance=ExtResource( 16 )]
 
-[node name="Weapon" parent="Foe/WeaponHolder" index="0" instance=ExtResource( 12 )]
+[node name="Weapon" parent="Foe/WeaponHolder" index="0" instance=ExtResource( 13 )]
 
 SIZE = Vector2( 1, 2 )
 CENTER = Vector2( 0, 1 )
 WEIGHT = 0.0
 LIFE = 0.1
 
-[node name="Wood" parent="Foe/WeaponHolder/Weapon/CubeContainer" index="0" instance=ExtResource( 6 )]
+[node name="Wood" parent="Foe/WeaponHolder/Weapon/CubeContainer" index="0" instance=ExtResource( 7 )]
 
-[node name="Wood2" parent="Foe/WeaponHolder/Weapon/CubeContainer" index="1" instance=ExtResource( 6 )]
+[node name="Wood2" parent="Foe/WeaponHolder/Weapon/CubeContainer" index="1" instance=ExtResource( 7 )]
 
 position = Vector2( 0, -40 )
 
@@ -143,7 +193,11 @@ position = Vector2( 0, -40 )
 
 [connection signal="dead" from="Foe" to="." method="_on_Foe_dead"]
 
+[connection signal="request_players_positions" from="Foe" to="." method="_on_Foe_request_players_positions"]
 
+
+[editable path="Walls/Wall3"]
+[editable path="Walls/Wall4"]
 [editable path="Steel"]
 [editable path="Player"]
 [editable path="Player/Body"]

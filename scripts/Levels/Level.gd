@@ -11,14 +11,14 @@ export (Vector2) var TEAM_4_START
 var teams = [[], [], [], []]
 
 func _ready():
-	for button in $Butttons.get_children():
+	for button in $Buttons.get_children():
 		button.connect("pressed", self, "on_Button_pressed", [button])
 		button.connect("unpressed", self, "on_Button_unpressed", [button])
 	
 	for player in $Players.get_children():
 		player.connect("damage_dealt_to", self, "show_damage")
 		player.connect("dead", self, "player_dies", [player])
-		players[player.TEAM - 1].append(player)
+		teams[player.TEAM - 1].append(player)
 	
 	for foe in $Foes.get_children():
 		foe.connect("damage_dealt_to", self, "show_damage")
@@ -72,11 +72,11 @@ signal loss(team)
 
 func player_dies(player):
 	$Players.remove_child(player)
-	players[player.TEAM - 1].erase(player)
+	teams[player.TEAM - 1].erase(player)
 	
 	drop(player.cash, player.position)
 	
-	if players[player.TEAM - 1].size() == 0:
+	if teams[player.TEAM - 1].size() == 0:
 		emit_signal("loss", player.TEAM)
 
 func foe_dies(foe):
@@ -111,4 +111,4 @@ func response_players_positions(delta, foe):
 	var ans = []
 	for player in $Players.get_children():
 		ans.append(player.position)
-	foe.catch_player_position(ans, delta)
+	foe.catch_players_positions(ans, delta)

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/Characters/Character.gd" type="Script" id=1]
-[ext_resource path="res://scenes/cube_holders/Body.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/Characters/Inventory.gd" type="Script" id=3]
-[ext_resource path="res://scenes/cubes/CubeFactory.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/Characters/Inventory.gd" type="Script" id=2]
+[ext_resource path="res://scenes/cubes/CubeFactory.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/cube_holders/Body.tscn" type="PackedScene" id=4]
 
 [node name="Character" type="KinematicBody2D" index="0"]
 
@@ -13,46 +13,37 @@ collision_mask = 64
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
-MOMENTUM = null
-MASS = null
-HP = null
-ARMOR = null
-STRENGTH = null
-DMG = null
-WEAPON_HP = null
-SPEED = null
-LUCK = null
+MOMENTUM = 0.0
+MASS = 0.0
+HP = 0.0
+ARMOR = 0.0
+STRENGTH = 0.0
+DMG = 0.0
+WEAPON_HP = 0.0
+SPEED = 0.0
+LUCK = 0.0
 
-[node name="Body" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Inventory" type="Node" parent="." index="0"]
 
-position = Vector2( 0, 0 )
-collision_layer = 2
-collision_mask = 2
-_sections_unfolded = [ "Collision", "Transform" ]
+script = ExtResource( 2 )
 
-[node name="BodyCollision_copy" type="CollisionPolygon2D" parent="." index="1"]
+[node name="CubeFactory" parent="Inventory" index="0" instance=ExtResource( 3 )]
 
-build_mode = 0
-polygon = PoolVector2Array(  )
+[node name="WeaponHolder" type="Node2D" parent="." index="1"]
 
-[node name="Inventory" type="Node" parent="." index="2"]
-
-script = ExtResource( 3 )
-
-[node name="CubeFactory" parent="Inventory" index="0" instance=ExtResource( 4 )]
-
-[node name="WeaponHolder" type="Node2D" parent="." index="3"]
-
-[node name="WeaponTimer" type="Timer" parent="." index="4"]
+[node name="WeaponTimer" type="Timer" parent="." index="2"]
 
 process_mode = 1
 wait_time = 1.0
 one_shot = true
 autostart = false
 
-[connection signal="body_changed" from="Body" to="." method="_on_Body_body_changed"]
+[node name="Body" parent="." index="3" instance=ExtResource( 4 )]
 
-[connection signal="dead" from="Body" to="." method="die"]
+[node name="BodyCollision_copy" type="CollisionPolygon2D" parent="." index="4"]
+
+build_mode = 0
+polygon = PoolVector2Array(  )
 
 [connection signal="timeout" from="WeaponTimer" to="." method="_on_WeaponTimer_timeout"]
 

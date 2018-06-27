@@ -15,7 +15,7 @@ var press_count = 0
 
 func on_Button_pressed(area, button):
 	press_count += 1
-	if press_count == 2:
+	if press_count == 2 && $Steel != null:
 		$Steel.visible = true
 		$Steel.set_layer(5)
 
@@ -35,8 +35,8 @@ func _on_Player_dead():
 	remove_child($Player)
 
 
-func _on_Foe_request_player_position(delta):
-	$Foe.catch_player_position($Player.position, delta)
+func _on_Foe_request_players_positions(delta):
+	$Foe.catch_players_positions([$Player.position], delta)
 
 
 func _on_Foe_dead():
