@@ -6,6 +6,6 @@
 [node name="Foe" index="0" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
-MS_PER_DECISION = null
+TIME_PER_DECISION = null
 
 

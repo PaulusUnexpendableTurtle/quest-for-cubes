@@ -13,14 +13,13 @@ func _on_ready():
 export (float) var TIME_PER_DECISION
 var time
 
-#link this signal to game scene to send player's position
-signal request_player_position(delta)
-var player_position
+signal request_players_positions(delta)
+var players_positions = []
 
-func catch_player_position(position, delta):
+func catch_players_positions(positions, delta):
 	var passes = floor(time / TIME_PER_DECISION)
 	time = time - passes * TIME_PER_DECISION
-	player_position = position
+	players_positions = positions
 	decide(delta, passes)
 
 func decide(delta, passes):

@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/Levels/Level.gd" type="Script" id=1]
+
+[node name="Level" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+TEAM_1_START = null
+TEAM_2_START = null
+TEAM_3_START = null
+TEAM_4_START = null
+
+[node name="Walls" type="Node2D" parent="." index="0"]
+
+[node name="Buttons" type="Node2D" parent="." index="1"]
+
+[node name="Drops" type="Node2D" parent="." index="2"]
+
+[node name="Players" type="Node2D" parent="." index="3"]
+
+[node name="Foes" type="Node2D" parent="." index="4"]
+
+

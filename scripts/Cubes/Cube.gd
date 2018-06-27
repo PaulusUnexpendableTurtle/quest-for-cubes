@@ -8,6 +8,7 @@ var life
 
 func _ready():
 	life = LIFE
+	$AnimatedSprite.play()
 
 
 func set_layer(number):
@@ -49,8 +50,3 @@ func change_life(amount):
 	life = clamp(life + amount, 0, LIFE)
 	if life == 0:
 		emit_signal("destroyed")
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass

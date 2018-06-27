@@ -10,6 +10,7 @@ var life
 func _ready():
 	pass
 
+var type = "Weapon"
 
 func _on_ready():
 	weight = WEIGHT

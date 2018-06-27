@@ -15,6 +15,7 @@ func _on_ready():
 	for weapon in weapons:
 		$WeaponHolder.remove_child(weapon)
 		add_weapon(weapon)
+		weapon.name = "Weapon"
 
 
 var team_number = 0
@@ -123,6 +124,10 @@ func luck_upgrade(v):
 	return false
 
 
+func collect_cube(cube):
+	$Inventory.add_cube(cube)
+
+
 signal damage_dealt_to(amount, damaged_object)
 
 func add_cube(point, cube):
@@ -161,7 +166,9 @@ func body_speed():
 
 
 func get_rot_angle(angle):
-	if abs(angle) > abs(2 * PI + angle):
+	if angle > PI:
+		return angle - 2 * PI
+	elif angle < -PI:
 		return 2 * PI + angle
 	else:
 		return angle
@@ -182,7 +189,7 @@ var active_weapon = 0
 func add_weapon(weapon):
 	$Inventory.weapons.append(weapon)
 	
-	weapon.connect("destroyed", self, "drop_weapon", [$Inventory.weapons.size() - 1])
+	weapon.connect("destroyed", self, "drop_weapon", [weapon])
 	weapon.connect("area_entered", self, "hit")
 	weapon.connect("damage", self, "damage_weapon", [weapon])
 	
@@ -214,7 +221,6 @@ func has_signal(area, signal_name):
 
 
 func count_damage():
-	return 10
 	if $Inventory.weapons.size() > active_weapon:
 		var mass_effect = mass / max(100 - 2 * strength, 1) + $Inventory.weapons[active_weapon].weight / 10
 		return 10 * (1 + dmg + get_bonus()) + pow(speed, 2) * mass_effect
@@ -259,10 +265,7 @@ func weapon_hold_time():
 var cash = []
 
 func drop_weapon(weapon):
-	#TODO: fix dis
-	var t = $WeaponHolder.get_children()
-	if t[0] == weapon:
-		$WeaponHolder.remove_child(weapon)
+	$WeaponHolder.remove_child(weapon)
 	
 	cash = cash + weapon.remove_cube(weapon.CENTER)
 	
@@ -301,13 +304,18 @@ func check_body_cash():
 	$Body.cash = []
 
 
+func compress_cash():
+	var ans = []
+	for c in cash:
+		if c.type == "Weapon" || c.REDROP_CHANCE * (1 - luck) >= randf():
+			ans.append(c)
+	cash = ans
+
+
 signal dead
 func die():
 	check_body_cash()
-	remove_cube($Body.CENTER)
+	cash = cash + remove_cube($Body.CENTER)
+	cash = cash + $Inventory.weapons
+	compress_cash()
 	emit_signal("dead")
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
