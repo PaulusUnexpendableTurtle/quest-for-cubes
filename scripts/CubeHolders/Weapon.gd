@@ -25,8 +25,6 @@ func _on_ready():
 				continue
 			cube.set_layer(8)
 			cube.set_masks([])
-	
-	set_layer(7)
 
 
 func set_team_number(number):

@@ -16,8 +16,8 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision" ]
-SIZE = null
-CENTER = null
+SIZE = Vector2( 9, 9 )
+CENTER = Vector2( 4, 4 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 
