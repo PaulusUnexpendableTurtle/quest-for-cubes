@@ -16,11 +16,13 @@ func _ready():
 		button.connect("unpressed", self, "on_Button_unpressed", [button])
 	
 	for player in $Players.get_children():
+		print(str(player) + " in players")
 		player.connect("damage_dealt_to", self, "show_damage")
 		player.connect("dead", self, "player_dies", [player])
 		teams[player.TEAM - 1].append(player)
 	
 	for foe in $Foes.get_children():
+		print(str(foe) + " in foes")
 		foe.connect("damage_dealt_to", self, "show_damage")
 		foe.connect("dead", self, "foe_dies", [foe])
 
@@ -93,18 +95,29 @@ func drop(cash, position):
 		c.position = position
 		c.scale = Vector2(0.5, 0.5)
 		c.rotation = randf()
+		c.set_layer(0)
 		c.set_masks([9])
 		c.connect("area_entered", self, "collect_drop", [c])
 		$Drops.add_child(c)
 
+
+#var delete_drop_queue = []
 func collect_drop(area, drop):
-	if $Drops.find_node(drop.name) == -1:
+	if $Drops.get_node(drop.get_path()) == null:
 		return
 	
+	drop.disconnect("area_entered", self, "collect_drop")
+	#delete_drop_queue.append(drop)
+	
+	print("Collecting with: " + str(area))
 	if drop.type == "Weapon":
 		area.get_parent().add_weapon(drop)
 	else:
 		area.get_parent().collect_cube(drop)
+	
+	area.get_parent().print_inventory()
+	print("Drops left:")
+	print($Drops.get_children())
 
 
 func response_players_positions(delta, foe):
@@ -112,3 +125,8 @@ func response_players_positions(delta, foe):
 	for player in $Players.get_children():
 		ans.append(player.position)
 	foe.catch_players_positions(ans, delta)
+
+
+func _process(delta):
+	for drop in $Drops.get_children():
+		drop.rotation += 0.01

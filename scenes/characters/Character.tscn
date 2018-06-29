@@ -40,11 +40,18 @@ autostart = false
 
 [node name="Body" parent="." index="3" instance=ExtResource( 4 )]
 
+position = Vector2( 0, 0 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
 [node name="BodyCollision_copy" type="CollisionPolygon2D" parent="." index="4"]
 
 build_mode = 0
 polygon = PoolVector2Array(  )
 
 [connection signal="timeout" from="WeaponTimer" to="." method="_on_WeaponTimer_timeout"]
+
+[connection signal="body_changed" from="Body" to="." method="_on_Body_body_changed"]
+
+[connection signal="dead" from="Body" to="." method="die"]
 
 

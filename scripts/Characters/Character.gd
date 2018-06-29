@@ -125,7 +125,14 @@ func luck_upgrade(v):
 
 
 func collect_cube(cube):
+	if cube.get_parent() != null:
+		cube.get_parent().call_deferred("remove_child", cube)
 	$Inventory.add_cube(cube)
+
+
+func print_inventory():
+	print($Inventory.weapons)
+	print($Inventory.materials_count)
 
 
 signal damage_dealt_to(amount, damaged_object)
@@ -187,6 +194,8 @@ func rot_speed():
 var active_weapon = 0
 
 func add_weapon(weapon):
+	if weapon.get_parent() != null:
+		weapon.get_parent().call_deferred("remove_child", weapon)
 	$Inventory.weapons.append(weapon)
 	
 	weapon.connect("destroyed", self, "drop_weapon", [weapon])
@@ -314,8 +323,9 @@ func compress_cash():
 
 signal dead
 func die():
+	print(str(self) + " dead")
 	check_body_cash()
-	cash = cash + remove_cube($Body.CENTER)
+	cash = cash + remove_cube(Vector2(0, 0))
 	cash = cash + $Inventory.weapons
 	compress_cash()
 	emit_signal("dead")

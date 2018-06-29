@@ -19,13 +19,20 @@ var players_positions = []
 func catch_players_positions(positions, delta):
 	var passes = floor(time / TIME_PER_DECISION)
 	time = time - passes * TIME_PER_DECISION
-	players_positions = positions
-	decide(delta, passes)
+	if positions.size() > 0:
+		players_positions = positions
+		decide(delta, passes)
+	else:
+		victory_dance(delta, passes)
 
 func decide(delta, passes):
 	#decides what to do
 	#delta - time since last frame in sec
 	#passes - limit of actions
+	pass
+
+func victory_dance(delta, passes):
+	#does this if all players are dead
 	pass
 
 func _process(delta):

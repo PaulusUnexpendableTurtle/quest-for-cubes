@@ -32,6 +32,7 @@ func add_cube(point, cube):
 
 
 func remove_cube(point):
+	print("remove " + str(point))
 	var ret = .remove_cube(point)
 	for cube in ret:
 		cube.disconnect("destroyed", self, "on_Cube_destroyed")
@@ -44,10 +45,12 @@ func rebuild_collision_shape():
 	.rebuild_collision_shape()
 	emit_signal("body_changed")
 
+var zero_vector = Vector2(0, 0)
+
 signal dead
 func on_Cube_destroyed(point):
 	cash = cash + remove_cube(point)
-	if point == CENTER:
+	if point == zero_vector:
 		emit_signal("dead")
 
 #func _process(delta):
