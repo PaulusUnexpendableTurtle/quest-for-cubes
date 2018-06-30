@@ -1,0 +1,593 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/sample_cell.png" type="Texture" id=1]
+[ext_resource path="res://scenes/menus/sub_editor/Camera2D.gd" type="Script" id=2]
+[ext_resource path="res://assets/steel_ver2.png" type="Texture" id=3]
+[ext_resource path="res://scenes/menus/sub_editor/MaterialsListItem.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Environment" id=1]
+
+background_mode = 0
+background_sky_custom_fov = 0.0
+background_color = Color( 0, 0, 0, 1 )
+background_energy = 1.0
+background_canvas_max_layer = 0
+ambient_light_color = Color( 0, 0, 0, 1 )
+ambient_light_energy = 1.0
+ambient_light_sky_contribution = 1.0
+fog_enabled = false
+fog_color = Color( 0.5, 0.6, 0.7, 1 )
+fog_sun_color = Color( 1, 0.9, 0.7, 1 )
+fog_sun_amount = 0.0
+fog_depth_enabled = true
+fog_depth_begin = 10.0
+fog_depth_curve = 1.0
+fog_transmit_enabled = false
+fog_transmit_curve = 1.0
+fog_height_enabled = false
+fog_height_min = 0.0
+fog_height_max = 100.0
+fog_height_curve = 1.0
+tonemap_mode = 0
+tonemap_exposure = 1.0
+tonemap_white = 1.0
+auto_exposure_enabled = false
+auto_exposure_scale = 0.4
+auto_exposure_min_luma = 0.05
+auto_exposure_max_luma = 8.0
+auto_exposure_speed = 0.5
+ss_reflections_enabled = false
+ss_reflections_max_steps = 64
+ss_reflections_fade_in = 0.15
+ss_reflections_fade_out = 2.0
+ss_reflections_depth_tolerance = 0.2
+ss_reflections_roughness = true
+ssao_enabled = false
+ssao_radius = 1.0
+ssao_intensity = 1.0
+ssao_radius2 = 0.0
+ssao_intensity2 = 1.0
+ssao_bias = 0.01
+ssao_light_affect = 0.0
+ssao_color = Color( 0, 0, 0, 1 )
+ssao_quality = 0
+ssao_blur = 3
+ssao_edge_sharpness = 4.0
+dof_blur_far_enabled = false
+dof_blur_far_distance = 10.0
+dof_blur_far_transition = 5.0
+dof_blur_far_amount = 0.1
+dof_blur_far_quality = 1
+dof_blur_near_enabled = false
+dof_blur_near_distance = 2.0
+dof_blur_near_transition = 1.0
+dof_blur_near_amount = 0.1
+dof_blur_near_quality = 1
+glow_enabled = false
+glow_levels/1 = false
+glow_levels/2 = false
+glow_levels/3 = true
+glow_levels/4 = false
+glow_levels/5 = true
+glow_levels/6 = false
+glow_levels/7 = false
+glow_intensity = 0.8
+glow_strength = 1.0
+glow_bloom = 0.0
+glow_blend_mode = 2
+glow_hdr_threshold = 1.0
+glow_hdr_scale = 2.0
+glow_bicubic_upscale = false
+adjustment_enabled = false
+adjustment_brightness = 1.0
+adjustment_contrast = 1.0
+adjustment_saturation = 1.0
+
+[sub_resource type="World" id=2]
+
+environment = SubResource( 1 )
+
+[node name="Editor" type="Node2D" index="0"]
+
+[node name="Table" type="HBoxContainer" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1920.0
+margin_bottom = 1084.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 5
+alignment = 0
+_sections_unfolded = [ "Rect", "custom_constants" ]
+
+[node name="Wall" type="Control" parent="Table" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_bottom = 1084.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Edit" type="VBoxContainer" parent="Table" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 5.0
+margin_right = 1473.0
+margin_bottom = 1084.0
+rect_min_size = Vector2( 1468, 1080 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 5
+alignment = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="Wall" type="Control" parent="Table/Edit" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1468.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="PreviewHolder" type="ViewportContainer" parent="Table/Edit" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 5.0
+margin_right = 1468.0
+margin_bottom = 994.0
+rect_min_size = Vector2( 1468, 989 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+stretch = false
+stretch_shrink = 5
+_sections_unfolded = [ "Rect" ]
+
+[node name="Viewport" type="Viewport" parent="Table/Edit/PreviewHolder" index="0"]
+
+arvr = false
+size = Vector2( 1468, 989 )
+own_world = false
+world = SubResource( 2 )
+transparent_bg = false
+msaa = 0
+hdr = true
+disable_3d = true
+usage = 0
+debug_draw = 0
+render_target_v_flip = false
+render_target_clear_mode = 0
+render_target_update_mode = 3
+audio_listener_enable_2d = false
+audio_listener_enable_3d = false
+physics_object_picking = false
+gui_disable_input = false
+gui_snap_controls_to_pixels = true
+shadow_atlas_size = 0
+shadow_atlas_quad_0 = 2
+shadow_atlas_quad_1 = 2
+shadow_atlas_quad_2 = 3
+shadow_atlas_quad_3 = 4
+_sections_unfolded = [ "Rendering", "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="Table/Edit/PreviewHolder/Viewport" index="0"]
+
+position = Vector2( 734, 494.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 6, 5, 1468, 989 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Camera2D" type="Camera2D" parent="Table/Edit/PreviewHolder/Viewport/Sprite" index="0"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+script = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="Table/Edit/PreviewHolder/Viewport/Sprite" index="1"]
+
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="MaterialsScroll" type="ScrollContainer" parent="Table/Edit" index="2"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 999.0
+margin_right = 1468.0
+margin_bottom = 1075.0
+rect_min_size = Vector2( 1468, 76 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = false
+scroll_vertical = 0
+scroll_deadzone = 5
+_sections_unfolded = [ "Anchor", "Rect", "Scroll" ]
+
+[node name="Boxes" type="HBoxContainer" parent="Table/Edit/MaterialsScroll" index="0"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1555.0
+margin_bottom = 60.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 5
+alignment = 0
+_sections_unfolded = [ "Size Flags", "custom_constants" ]
+
+[node name="Wood" parent="Table/Edit/MaterialsScroll/Boxes" index="0" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 0.0
+margin_right = 125.0
+margin_bottom = 60.0
+
+[node name="Stone" parent="Table/Edit/MaterialsScroll/Boxes" index="1" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 130.0
+margin_top = 0.0
+margin_right = 255.0
+margin_bottom = 60.0
+
+[node name="Steel" parent="Table/Edit/MaterialsScroll/Boxes" index="2" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 260.0
+margin_top = 0.0
+margin_right = 385.0
+margin_bottom = 60.0
+
+[node name="Panel" parent="Table/Edit/MaterialsScroll/Boxes" index="3" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 390.0
+margin_top = 0.0
+margin_right = 515.0
+margin_bottom = 60.0
+
+[node name="Panel2" parent="Table/Edit/MaterialsScroll/Boxes" index="4" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 520.0
+margin_top = 0.0
+margin_right = 645.0
+margin_bottom = 60.0
+
+[node name="Panel3" parent="Table/Edit/MaterialsScroll/Boxes" index="5" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 650.0
+margin_top = 0.0
+margin_right = 775.0
+margin_bottom = 60.0
+
+[node name="Panel4" parent="Table/Edit/MaterialsScroll/Boxes" index="6" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 780.0
+margin_top = 0.0
+margin_right = 905.0
+margin_bottom = 60.0
+
+[node name="Panel5" parent="Table/Edit/MaterialsScroll/Boxes" index="7" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 910.0
+margin_top = 0.0
+margin_right = 1035.0
+margin_bottom = 60.0
+
+[node name="Panel6" parent="Table/Edit/MaterialsScroll/Boxes" index="8" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1040.0
+margin_top = 0.0
+margin_right = 1165.0
+margin_bottom = 60.0
+
+[node name="Panel7" parent="Table/Edit/MaterialsScroll/Boxes" index="9" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1170.0
+margin_top = 0.0
+margin_right = 1295.0
+margin_bottom = 60.0
+
+[node name="Panel8" parent="Table/Edit/MaterialsScroll/Boxes" index="10" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1300.0
+margin_top = 0.0
+margin_right = 1425.0
+margin_bottom = 60.0
+
+[node name="Panel9" parent="Table/Edit/MaterialsScroll/Boxes" index="11" instance=ExtResource( 4 )]
+
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1430.0
+margin_top = 0.0
+margin_right = 1555.0
+margin_bottom = 60.0
+
+[node name="Wall2" type="Control" parent="Table/Edit" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 1080.0
+margin_right = 1468.0
+margin_bottom = 1080.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Wall2" type="Control" parent="Table" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1478.0
+margin_right = 1478.0
+margin_bottom = 1084.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Master" type="VBoxContainer" parent="Table" index="3"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1483.0
+margin_right = 1915.0
+margin_bottom = 1084.0
+rect_min_size = Vector2( 432, 1080 )
+rect_pivot_offset = Vector2( 1488, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 5
+alignment = 0
+_sections_unfolded = [ "Hint", "Rect", "custom_constants" ]
+
+[node name="Wall" type="Control" parent="Table/Master" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 432.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Info" type="VBoxContainer" parent="Table/Master" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 5.0
+margin_right = 432.0
+margin_bottom = 960.0
+rect_min_size = Vector2( 0, 955 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="Buttons" type="VBoxContainer" parent="Table/Master" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 965.0
+margin_right = 432.0
+margin_bottom = 1075.0
+rect_min_size = Vector2( 0, 110 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 6
+alignment = 0
+_sections_unfolded = [ "custom_constants" ]
+
+[node name="Button" type="Button" parent="Table/Master/Buttons" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 432.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 0, 52 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Button2" type="Button" parent="Table/Master/Buttons" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 58.0
+margin_right = 432.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 0, 52 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Wall2" type="Control" parent="Table/Master" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 1080.0
+margin_right = 432.0
+margin_bottom = 1080.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Wall3" type="Control" parent="Table" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1920.0
+margin_right = 1920.0
+margin_bottom = 1084.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+

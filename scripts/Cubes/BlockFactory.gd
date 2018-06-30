@@ -3,9 +3,9 @@ extends Node
 func _ready():
 	pass
 
-export (PackedScene) var Wood
-export (PackedScene) var Stone
-export (PackedScene) var Steel
+const Wood = preload("res://scenes/cubes/Wood.tscn")
+const Stone = preload("res://scenes/cubes/Stone.tscn")
+const Steel = preload("res://scenes/cubes/Steel.tscn")
 
 enum materials {
 	WOOD,

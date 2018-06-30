@@ -3,6 +3,7 @@ extends "res://scripts/CubeHolders/CubeHolder.gd"
 func _ready():
 	pass
 
+var type = "Body"
 
 var team_number = 0
 func set_team_number(number):

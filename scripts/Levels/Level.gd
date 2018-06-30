@@ -98,6 +98,8 @@ func drop(cash, position):
 		c.set_layer(0)
 		c.set_masks([9])
 		c.connect("area_entered", self, "collect_drop", [c])
+		if c.get_parent() != null:
+			c.get_parent().remove_child(c)
 		$Drops.add_child(c)
 
 
